@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/hydeout/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/hydeout/" rel="alternate" type="text/html" /><updated>2019-08-15T21:31:19+05:30</updated><id>http://localhost:4000/hydeout/feed.xml</id><title type="html">Shashanth</title><author><name>Shashanth</name></author><entry><title type="html">Installing Oracle JDK 8 in Ubuntu</title><link href="http://localhost:4000/hydeout/2019/08/15/installing-oracle-jdk8-ubuntu.html" rel="alternate" type="text/html" title="Installing Oracle JDK 8 in Ubuntu" /><published>2019-08-15T00:00:00+05:30</published><updated>2019-08-15T00:00:00+05:30</updated><id>http://localhost:4000/hydeout/2019/08/15/installing-oracle-jdk8-ubuntu</id><content type="html" xml:base="http://localhost:4000/hydeout/2019/08/15/installing-oracle-jdk8-ubuntu.html">&lt;p&gt;In this blog post we’ll learn how to install Oracle JDK 8 in Ubuntu Linux systems? This should work on all Debian based Linux systems as well.&lt;/p&gt;
+
+&lt;p&gt;Download latest JDK 8 from Oracle’s official &lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/index.html&quot;&gt;site&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;After downloading open terminal and browse to downloaded directory. And in terminal execute below commands.&lt;/p&gt;
+
+&lt;p&gt;Let’s assume that we downloaded JDK 8 into &lt;code class=&quot;highlighter-rouge&quot;&gt;Downloads&lt;/code&gt; directory. If you’ve downloaded it to some other directory, change the directory in terminal and start executing below commands.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tar -xvf jdk-8uxyz-linux-x64.tar.gz   # extract tar ball
+sudo mkdir -p /usr/lib/jvm            # create new folder jvm
+sudo mv jdk1.8.x /usr/lib/jvm/        # move extracted folder 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now update default JDK path to Oracle JDK&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo update-alternatives --install &quot;/usr/bin/java&quot; &quot;java&quot; &quot;/usr/lib/jvm/jdk1.8.x/bin/java&quot; 1
+sudo update-alternatives --install &quot;/usr/bin/javac&quot; &quot;javac&quot; &quot;/usr/lib/jvm/jdk1.8.x/bin/javac&quot; 1
+sudo update-alternatives --install &quot;/usr/bin/javaws&quot; &quot;javaws&quot; &quot;/usr/lib/jvm/jdk1.8.x/bin/javaws&quot; 1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Correct ownership&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo chmod a+x /usr/bin/java
+sudo chmod a+x /usr/bin/javac
+sudo chmod a+x /usr/bin/javaws
+sudo chown -R root:root /usr/lib/jvm/jdk1.8.x
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now check which JDK is set as default. Below command will show all the list of JDK’s installed in our system. Just enter selection number and hit enter to set it as default JDK.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo update-alternatives --config java
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Just replace &lt;code class=&quot;highlighter-rouge&quot;&gt;java&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;javac&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;javaws&lt;/code&gt; if you want to set defaults for these commands as well.&lt;/p&gt;
+
+&lt;p&gt;Now check JDK path by executing below command.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo $JAVA_HOME
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If it returns updated/custom set JDK path, your installation went fine. To check JDK version simply run below command.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;java -version
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Shashanth</name></author><category term="ubuntu" /><category term="JDK8" /><category term="installation" /><summary type="html">In this blog post we’ll learn how to install Oracle JDK 8 in Ubuntu Linux systems? This should work on all Debian based Linux systems as well.</summary></entry></feed>
