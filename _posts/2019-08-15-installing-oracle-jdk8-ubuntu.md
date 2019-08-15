@@ -42,6 +42,6 @@ Now check JDK path by executing below command.
 
     echo $JAVA_HOME
     
-If it returns updated/custom set JDK path, your installation went fine. To check JDK version simply run below command.
+If it returns updated/custom JDK path, you're good go! To check JDK version, simply run below command.
 
     java -version
