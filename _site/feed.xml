@@ -1,8 +1,83 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-08-18T12:41:07+05:30</updated><id>http://localhost:4000/feed.xml</id><title type="html">Shashanth</title><author><name>Shashanth</name></author><entry><title type="html">Installing Oracle JDK 8 in Ubuntu</title><link href="http://localhost:4000/2019/08/15/installing-oracle-jdk8-ubuntu.html" rel="alternate" type="text/html" title="Installing Oracle JDK 8 in Ubuntu" /><published>2019-08-15T00:00:00+05:30</published><updated>2019-08-15T00:00:00+05:30</updated><id>http://localhost:4000/2019/08/15/installing-oracle-jdk8-ubuntu</id><content type="html" xml:base="http://localhost:4000/2019/08/15/installing-oracle-jdk8-ubuntu.html">&lt;p&gt;In this blog post we’ll learn how to install Oracle JDK 8 in Ubuntu Linux systems? This should work on all Debian based Linux systems as well.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-08-18T14:38:58+05:30</updated><id>http://localhost:4000/feed.xml</id><title type="html">Shashanth</title><author><name>Shashanth</name></author><entry><title type="html">Installing LAMP Stack on Ubuntu</title><link href="http://localhost:4000/2019/08/18/installing-lamp-ubuntu.html" rel="alternate" type="text/html" title="Installing LAMP Stack on Ubuntu" /><published>2019-08-18T00:00:00+05:30</published><updated>2019-08-18T00:00:00+05:30</updated><id>http://localhost:4000/2019/08/18/installing-lamp-ubuntu</id><content type="html" xml:base="http://localhost:4000/2019/08/18/installing-lamp-ubuntu.html">&lt;p&gt;In this blog post, we’ll be learning how to install a LAMP stack in Ubuntu? I’ll be using Ubuntu 18.04 LTS
+and it should very well in upcoming versions of Ubuntu versions as well.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Do not use these settings on &lt;strong&gt;Live Servers&lt;/strong&gt;. The settings mentioned here only meant to be for a local development server. Use it on your own risk.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;First of all, update your Ubuntu software package repository by executing below commands.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt update
+sudo apt upgrade
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If prompted for the password, enter it. Once you update the package repository you can start installing the LAMP stack.&lt;/p&gt;
+
+&lt;h3 id=&quot;installing-apache2-and-php&quot;&gt;Installing Apache2 and PHP&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt install apache2   
+sudo apt install php libapache2-mod-php
+sudo apt install php-intl   # enabling PHP module intl
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;It’s very important to install and enable &lt;code class=&quot;highlighter-rouge&quot;&gt;php-intl&lt;/code&gt; library to perform various locale-aware operations. To enable this feature after installation, we need to open the &lt;code class=&quot;highlighter-rouge&quot;&gt;php.ini&lt;/code&gt; file. To confirm correct and currently loaded &lt;code class=&quot;highlighter-rouge&quot;&gt;php.ini&lt;/code&gt; file, create a file named &lt;code class=&quot;highlighter-rouge&quot;&gt;info.php&lt;/code&gt; inside &lt;code class=&quot;highlighter-rouge&quot;&gt;/var/www/html/&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To create &lt;code class=&quot;highlighter-rouge&quot;&gt;info.php&lt;/code&gt; execute below command.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo echo &quot;&amp;lt;?php phpinfo(); ?&amp;gt;&quot; &amp;gt;&amp;gt; /var/www/html/info.php
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now open any web browser of your wish and hit the URL &lt;code class=&quot;highlighter-rouge&quot;&gt;http://localhost/info.php&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Check for the &lt;strong&gt;Loaded Configuration File&lt;/strong&gt;. Which will look something like this &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/php/7.x/apache2/php.ini&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Here, &lt;code class=&quot;highlighter-rouge&quot;&gt;7.x&lt;/code&gt; is the PHP version installed on your system.&lt;/p&gt;
+
+&lt;p&gt;Now open the same &lt;code class=&quot;highlighter-rouge&quot;&gt;php.ini&lt;/code&gt; file in any text editors like nano or vim. Search for &lt;code class=&quot;highlighter-rouge&quot;&gt;;extension=intl;&lt;/code&gt; and remove the semicolon from starting of the line, save and exit.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;extension=intl;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Restart Apache server&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo service apache2 restart
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;By default, the root directory for deploying projects will be &lt;code class=&quot;highlighter-rouge&quot;&gt;/var/www/html&lt;/code&gt; and if you want to change it, we need to edit the &lt;code class=&quot;highlighter-rouge&quot;&gt;000-default.conf&lt;/code&gt; file. But before that, I’d highly recommend you to keep a copy of this file. If something goes wrong with our configuration file, we can easily revert it back to the original state.&lt;/p&gt;
+
+&lt;p&gt;First, create a copy of the file.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.bkp.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, you’re good to edit the &lt;code class=&quot;highlighter-rouge&quot;&gt;000-default.conf&lt;/code&gt; file. Edit with nano or any text editor you’re familiar with.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo nano /etc/apache2/sites-available/000-default.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Change &lt;code class=&quot;highlighter-rouge&quot;&gt;DocumentRoot&lt;/code&gt; value to something else, save and close the file. Don’t forget to restart Apache server.&lt;/p&gt;
+
+&lt;h3 id=&quot;installing-mysql&quot;&gt;Installing MySQL&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt install mysql-server
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After installation, it’s time to configure MySQL. In order to do that execute below command.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo mysql_secure_installation  ## and hit Enter
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;When you run the above command you’ll be prompted with some questionnaire. Which is required to secure the MySQL installation.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;By default MySQL server will not allow you to access the database remotely (MySQL GUI clients like MySQL Workbench, SQLyog, Heidi SQL, etc) with &lt;code class=&quot;highlighter-rouge&quot;&gt;root&lt;/code&gt; privileges for security reasons. If you’re on the local machine and want to access databases with GUI clients, create a new user or allow &lt;code class=&quot;highlighter-rouge&quot;&gt;root&lt;/code&gt; user to access databases remotely.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;For more read MySQL’s &lt;a href=&quot;https://dev.mysql.com/doc/refman/5.6/en/validate-password-options-variables.html&quot;&gt;offical doc&lt;/a&gt;&lt;/p&gt;</content><author><name>Shashanth</name></author><category term="ubuntu" /><category term="apache2" /><category term="php" /><category term="mysql" /><category term="installation" /><summary type="html">In this blog post, we’ll be learning how to install a LAMP stack in Ubuntu? I’ll be using Ubuntu 18.04 LTS and it should very well in upcoming versions of Ubuntu versions as well.</summary></entry><entry><title type="html">Installing Oracle JDK 8 on Ubuntu</title><link href="http://localhost:4000/2019/08/15/installing-oracle-jdk8-ubuntu.html" rel="alternate" type="text/html" title="Installing Oracle JDK 8 on Ubuntu" /><published>2019-08-15T00:00:00+05:30</published><updated>2019-08-15T00:00:00+05:30</updated><id>http://localhost:4000/2019/08/15/installing-oracle-jdk8-ubuntu</id><content type="html" xml:base="http://localhost:4000/2019/08/15/installing-oracle-jdk8-ubuntu.html">&lt;p&gt;In this blog post, we’ll learn how to install Oracle JDK 8 in Ubuntu Linux systems? This should work on all Debian based Linux systems as well.&lt;/p&gt;
 
 &lt;p&gt;Download latest JDK 8 from Oracle’s official &lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/index.html&quot;&gt;site&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;After downloading open terminal and browse to downloaded directory. And in terminal execute below commands.&lt;/p&gt;
+&lt;p&gt;After downloading open terminal and browse to the downloaded directory. And in a terminal execute below commands.&lt;/p&gt;
 
 &lt;p&gt;Let’s assume that we downloaded JDK 8 into &lt;code class=&quot;highlighter-rouge&quot;&gt;Downloads&lt;/code&gt; directory. If you’ve downloaded it to some other directory, change the directory in terminal and start executing below commands.&lt;/p&gt;
 
@@ -38,7 +113,7 @@ sudo chown -R root:root /usr/lib/jvm/jdk1.8.x
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo $JAVA_HOME
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;If it returns updated/custom JDK path, you’re good go! To check JDK version, simply run below command.&lt;/p&gt;
+&lt;p&gt;If it returns an updated/custom JDK path, you’re a good go! To check the JDK version, simply run below command.&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;java -version
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Shashanth</name></author><category term="ubuntu" /><category term="JDK8" /><category term="installation" /><summary type="html">In this blog post we’ll learn how to install Oracle JDK 8 in Ubuntu Linux systems? This should work on all Debian based Linux systems as well.</summary></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Shashanth</name></author><category term="ubuntu" /><category term="JDK8" /><category term="installation" /><summary type="html">In this blog post, we’ll learn how to install Oracle JDK 8 in Ubuntu Linux systems? This should work on all Debian based Linux systems as well.</summary></entry></feed>
