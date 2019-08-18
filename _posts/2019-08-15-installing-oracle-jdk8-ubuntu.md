@@ -1,17 +1,17 @@
 ---
 layout: post
-title: "Installing Oracle JDK 8 in Ubuntu"
+title: "Installing Oracle JDK 8 on Ubuntu"
 tags:
   - ubuntu
   - JDK8
   - installation
 ---
 
-In this blog post we'll learn how to install Oracle JDK 8 in Ubuntu Linux systems? This should work on all Debian based Linux systems as well.
+In this blog post, we'll learn how to install Oracle JDK 8 in Ubuntu Linux systems? This should work on all Debian based Linux systems as well.
 
 Download latest JDK 8 from Oracle's official [site](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
-After downloading open terminal and browse to downloaded directory. And in terminal execute below commands. 
+After downloading open terminal and browse to the downloaded directory. And in a terminal execute below commands. 
 
 Let's assume that we downloaded JDK 8 into `Downloads` directory. If you've downloaded it to some other directory, change the directory in terminal and start executing below commands.
 
@@ -42,6 +42,6 @@ Now check JDK path by executing below command.
 
     echo $JAVA_HOME
     
-If it returns updated/custom JDK path, you're good go! To check JDK version, simply run below command.
+If it returns an updated/custom JDK path, you're a good go! To check the JDK version, simply run below command.
 
     java -version
