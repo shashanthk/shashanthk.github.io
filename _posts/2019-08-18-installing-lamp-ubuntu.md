@@ -9,7 +9,7 @@ tags:
   - installation
 ---
 In this blog post, we'll be learning how to install a LAMP stack in Ubuntu? I'll be using Ubuntu 18.04 LTS
-and it should very well in upcoming versions of Ubuntu versions as well.
+and it should work very well in upcoming versions of Ubuntu versions too.
 
 > Do not use these settings on **Live Servers**. The settings mentioned here only meant to be for a local development server. Use it on your own risk.
 
