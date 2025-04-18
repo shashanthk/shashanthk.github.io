@@ -54,20 +54,20 @@ SSH keys are essential for GitHub and Bitbucket because they replace vulnerable 
     - On Windows: `notepad ~/.ssh/config`
     - On Linux or Mac: `nano ~/.ssh/config` or `vim ~/.ssh/config`
 
-	```properties
-   	# GitHub configuration
+	```sh
+    # GitHub configuration
 
-   	Host user-github
+    Host user-github
     HostName github.com
     User git
     IdentityFile ~/.ssh/id_file_name_for_github
 
-   	# Bitbucket configuration
+    # Bitbucket configuration
 
-	Host user-bitbucket
+    Host user-bitbucket
     HostName bitbucket.org
     User git
-	IdentityFile ~/.ssh/id_file_name_for_bitbucket
+    IdentityFile ~/.ssh/id_file_name_for_bitbucket
 	```
 
 	Please change the `Host` value `user-github` according to the requirement. 
@@ -76,14 +76,14 @@ SSH keys are essential for GitHub and Bitbucket because they replace vulnerable 
 
 > **Note**: In some ISPs, the above configuration will not work, and you may receive an error message like "ssh: connect to host user-github port 22: Connection refused." If you face such an error, try the alternative configuration provided below:
 
-```properties
-# GitHub configuration
-Host user-github
-HostName ssh.github.com
-User git
-Port 443
-IdentityFile ~/.ssh/id_file_name_for_github
-```
+  ```sh
+  # GitHub configuration
+  Host user-github
+  HostName ssh.github.com
+  User git
+  Port 443
+  IdentityFile ~/.ssh/id_file_name_for_github
+  ```
 
 5. Copy the content of the `id_file_name.pub` file and paste it into your GitHub account settings:
 
