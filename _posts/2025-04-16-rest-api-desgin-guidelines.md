@@ -1,7 +1,7 @@
 ---
-layout: post
+author: shashanth
 title: "REST API guidelines"
-categories: api
+categories: [rest, guidelines]
 ---
 
 REST (Representational State Transfer) is an architectural style for designing networked applications. Although REST is not a strict standard but rather a set of constraints and best practices, following robust REST API guidelines helps ensure that your API is intuitive, scalable, and reliable. Below is an in-depth exploration of REST API guidelines grouped into several key categories:

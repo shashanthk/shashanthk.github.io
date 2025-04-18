@@ -1,7 +1,7 @@
 ---
-layout: post
+author: shashanth
 title: "Design patterns in Java"
-categories: java
+categories: [java]
 ---
 
 Design patterns are proven solutions to recurring software design problems. They offer templates for solving issues in object-oriented design, allowing developers to write flexible, reusable, and maintainable code.

@@ -1,7 +1,7 @@
 ---
-layout: post
+author: shashanth
 title: "The SOLID principles in Java"
-categories: java
+categories: [java]
 ---
 
 The SOLID principles form a set of guidelines that help developers create software that is easy to maintain, extend, and refactor. They stress modularity, clarity, and separation of concerns. Below is an in-depth explanation of each principle using Java examples.
