@@ -36,8 +36,10 @@ SSH keys are essential for GitHub and Bitbucket because they replace vulnerable 
 
     Here, the `-f` parameter creates two files with the name you mentioned: one is the private key and the other is the public key.
 
-	    id_file_name
-    	id_file_name.pub
+    ```txt
+    id_file_name
+    id_file_name.pub
+    ```
 
 	Please change the file name according to the requirement.
 
@@ -52,7 +54,7 @@ SSH keys are essential for GitHub and Bitbucket because they replace vulnerable 
     - On Windows: `notepad ~/.ssh/config`
     - On Linux or Mac: `nano ~/.ssh/config` or `vim ~/.ssh/config`
 
-	```ini
+	```properties
    	# GitHub configuration
 
    	Host user-github
@@ -74,7 +76,7 @@ SSH keys are essential for GitHub and Bitbucket because they replace vulnerable 
 
 > **Note**: In some ISPs, the above configuration will not work, and you may receive an error message like "ssh: connect to host user-github port 22: Connection refused." If you face such an error, try the alternative configuration provided below:
 
-```ini
+```properties
 # GitHub configuration
 Host user-github
 HostName ssh.github.com
