@@ -116,6 +116,7 @@ These patterns focus on how classes and objects are composed to form larger stru
 - **Use When**:
   - You want to add access control, lazy loading, or logging.
 - [**Example**](#7-proxy-pattern)
+
 ---
 
 ## **3. Behavioral Design Patterns**
