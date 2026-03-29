@@ -1,348 +1,198 @@
 ---
 author: shashanth
-title: "The SOLID principles in Java"
+title: "SOLID Principles in Java: Build Maintainable, Extensible Systems"
 categories: [java]
 ---
 
-The SOLID principles form a set of guidelines that help developers create software that is easy to maintain, extend, and refactor. They stress modularity, clarity, and separation of concerns. Below is an in-depth explanation of each principle using Java examples.
+# SOLID Principles in Java: Build Maintainable, Extensible Systems
 
----
+## Why This Matters
 
-## 1. Single Responsibility Principle (SRP)
+As Java codebases grow, the biggest risk is rarely syntax errors—it is design drift. Classes become overloaded, dependencies harden, and small feature requests trigger risky refactors. SOLID helps prevent that by giving teams a shared vocabulary for maintainable object-oriented design.
 
-**Definition:**  
-A class should have only one reason to change. In other words, every class should have only one responsibility or job. This reduces complexity and makes each part of your code easier to understand, test, and maintain.
+## Problem Statement
 
-**Explanation:**  
-- **Responsibility Separation:** When a class handles multiple tasks (such as processing business logic and managing I/O concerns like logging or display), changes in one responsibility may affect the other unexpectedly.
-- **Maintainability:** If each class does one thing, then developers know exactly where to look when a change is needed.
+Without design boundaries, Java services often accumulate:
 
-**Java Example:**  
-Imagine an invoicing system. Without SRP, you might mix business logic with output formatting, but using SRP you would separate these concerns.
+- Large classes doing unrelated work
+- Tight coupling to concrete implementations
+- Fragile inheritance hierarchies
+- Interfaces that force unused methods
+- Components that are hard to test in isolation
+
+SOLID provides a practical design framework to reduce those failure modes.
+
+## Core Concepts
+
+SOLID is an acronym:
+
+1. **S**ingle Responsibility Principle (SRP)
+2. **O**pen/Closed Principle (OCP)
+3. **L**iskov Substitution Principle (LSP)
+4. **I**nterface Segregation Principle (ISP)
+5. **D**ependency Inversion Principle (DIP)
+
+## How It Works
+
+### 1) Single Responsibility Principle (SRP)
+A class should have one reason to change.
+
+- Keep domain logic separate from presentation, persistence, and integration concerns.
+- Smaller responsibilities improve testability and change isolation.
 
 ```java
-// Business Logic: Responsible only for invoice data and computations.
 public class Invoice {
-    private List<Item> items;
-    private Customer customer;
-    
-    public Invoice(Customer customer, List<Item> items) {
-        this.customer = customer;
+    private final List<Item> items;
+
+    public Invoice(List<Item> items) {
         this.items = items;
     }
-    
-    public double calculateTotal() {
-        return items.stream().mapToDouble(Item::getPrice).sum();
+
+    public double total() {
+        return items.stream().mapToDouble(Item::price).sum();
     }
-    
-    // Getters and additional business-related methods...
 }
 
-// Separate Responsibility: Responsible for presenting or printing an invoice.
 public class InvoicePrinter {
     public void print(Invoice invoice) {
-        System.out.println("Invoice for: " + invoice.getCustomer().getName());
-        invoice.getItems().forEach(item -> 
-            System.out.println(item.getDescription() + " - $" + item.getPrice()));
-        System.out.println("Total: $" + invoice.calculateTotal());
+        System.out.println("Total: " + invoice.total());
     }
 }
 ```
 
-*In this example, `Invoice` is solely focused on business logic, while `InvoicePrinter` deals with output formatting. If the printing logic changes, only `InvoicePrinter` needs to be updated.*
+### 2) Open/Closed Principle (OCP)
+Software should be open for extension, closed for modification.
 
----
-
-## 2. Open/Closed Principle (OCP)
-
-**Definition:**  
-Software entities (classes, modules, functions, etc.) should be open for extension but closed for modification. That means you should be able to add new functionality without altering existing code.
-
-**Explanation:**  
-- **Extension over Modification:** Using abstract classes or interfaces allows your code to be extended with new behaviors while keeping the existing tested code intact.
-- **Stability:** Once tested and deployed code remains unmodified, minimizing the risk of introducing new bugs.
-
-**Java Example:**  
-Consider a scenario where you need to compute areas for different shapes. By creating an abstract `Shape` class or an interface, you can add new shapes without changing the area calculator.
+- Add new behavior by introducing new implementations.
+- Avoid repeatedly editing stable, already-tested logic.
 
 ```java
-// Open for extension: Shape interface.
 public interface Shape {
     double area();
 }
 
-// Concrete implementation for a Circle.
-public class Circle implements Shape {
-    private double radius;
-    
-    public Circle(double radius) {
-        this.radius = radius;
-    }
-    
-    @Override
-    public double area() {
-        return Math.PI * radius * radius;
-    }
+public final class Circle implements Shape {
+    private final double radius;
+    public Circle(double radius) { this.radius = radius; }
+    public double area() { return Math.PI * radius * radius; }
 }
 
-// Concrete implementation for a Rectangle.
-public class Rectangle implements Shape {
-    private double width;
-    private double height;
-    
-    public Rectangle(double width, double height) {
-        this.width = width;
-        this.height = height;
-    }
-    
-    @Override
-    public double area() {
-        return width * height;
-    }
-}
-
-// A class that uses the Shape interface.
-public class AreaCalculator {
-    public double totalArea(List<Shape> shapes) {
-        return shapes.stream().mapToDouble(Shape::area).sum();
-    }
+public final class Rectangle implements Shape {
+    private final double w, h;
+    public Rectangle(double w, double h) { this.w = w; this.h = h; }
+    public double area() { return w * h; }
 }
 ```
 
-*If you need to add a new shape (say, a Triangle), you simply implement the `Shape` interface and add your new class. The calculator remains unchanged.*
+### 3) Liskov Substitution Principle (LSP)
+Subtypes must be usable anywhere the base type is expected.
 
----
-
-## 3. Liskov Substitution Principle (LSP)
-
-**Definition:**  
-Subtypes should be substitutable for their base types without affecting the correctness of the program. In simple terms, if `S` is a subtype of `T`, then objects of type `T` should be replaceable with objects of type `S` without altering any desirable properties.
-
-**Explanation:**  
-- **Behavioral Compatibility:** Overriding methods in subclasses should not violate the expectations set by the base class’s contract.
-- **Preconditions and Postconditions:** Subclasses should not strengthen preconditions or weaken postconditions compared to the parent class.
-
-**Java Example – The Rectangle/Square Problem:**  
-
-Consider a common mistake where a `Square` is made a subclass of `Rectangle`. Although a square is a kind of rectangle geometrically, the implementation might violate LSP if the subclass alters expected behavior.
-
-*Problematic design:*
-
-```java
-// Base class: Rectangle
-public class Rectangle {
-    protected int width;
-    protected int height;
-    
-    public void setWidth(int width) {
-        this.width = width;
-    }
-    
-    public void setHeight(int height) {
-        this.height = height;
-    }
-    
-    public int getArea() {
-        return width * height;
-    }
-}
-
-// Subclass: Square
-public class Square extends Rectangle {
-    @Override
-    public void setWidth(int width) {
-        this.width = width;
-        this.height = width;
-    }
-    
-    @Override
-    public void setHeight(int height) {
-        this.height = height;
-        this.width = height;
-    }
-}
-```
-
-*Issue:* If code that works with `Rectangle` sets width and height independently, substituting a `Square` will break the assumptions—changes in one dimension will unexpectedly affect the other.
-
-**Proper Approach:**  
-Instead of forcing a square into a rectangle hierarchy, model them separately. One way is to define a more abstract interface for shapes with an area calculation:
+- Avoid inheritance when child behavior changes parent contracts.
+- Favor composition or parallel abstractions when semantics differ.
 
 ```java
 public interface Shape {
-    int getArea();
+    int area();
 }
 
-public class RectangleShape implements Shape {
-    private int width;
-    private int height;
-    
+public final class RectangleShape implements Shape {
+    private final int width, height;
     public RectangleShape(int width, int height) {
-        this.width = width;
-        this.height = height;
+        this.width = width; this.height = height;
     }
-    
-    @Override
-    public int getArea() {
-        return width * height;
-    }
+    public int area() { return width * height; }
 }
 
-public class SquareShape implements Shape {
-    private int side;
-    
-    public SquareShape(int side) {
-        this.side = side;
-    }
-    
-    @Override
-    public int getArea() {
-        return side * side;
-    }
+public final class SquareShape implements Shape {
+    private final int side;
+    public SquareShape(int side) { this.side = side; }
+    public int area() { return side * side; }
 }
 ```
 
-*Now both `RectangleShape` and `SquareShape` implement the same contract without misusing inheritance, ensuring that substitutability holds.*
+### 4) Interface Segregation Principle (ISP)
+Clients should not depend on methods they do not use.
 
----
-
-## 4. Interface Segregation Principle (ISP)
-
-**Definition:**  
-Clients should not be forced to depend upon interfaces that they do not use. Instead of one large fat interface, many smaller, more specific interfaces are preferred.
-
-**Explanation:**  
-- **Tailored Interfaces:** Instead of a single interface with many methods, split it so that the client only needs to implement what it actually uses.
-- **Reduced Coupling:** This reduces the impact of change because a client is not affected by methods it does not care about.
-
-**Java Example – Multifunction Device Interfaces:**  
-
-Suppose you have a multifunction device that can print, scan, and fax. Not every device will support all functionalities.
-
-*Problematic design (fat interface):*
+- Split large interfaces into focused contracts.
+- Keep implementations lean and intention-revealing.
 
 ```java
-public interface MultiFunctionDevice {
-    void print(Document d);
-    void scan(Document d);
-    void fax(Document d);
+public interface Printable {
+    void print(Document doc);
+}
+
+public interface Scannable {
+    Document scan();
+}
+
+public final class OfficePrinter implements Printable, Scannable {
+    public void print(Document doc) { /* ... */ }
+    public Document scan() { return new Document(); }
 }
 ```
 
-*Better design (segregated interfaces):*
+### 5) Dependency Inversion Principle (DIP)
+High-level modules should depend on abstractions, not low-level details.
+
+- Inject interfaces rather than constructing dependencies directly.
+- Improves testing, replaceability, and modularity.
 
 ```java
-// Segregated interfaces
-public interface Printer {
-    void print(Document d);
+public interface MessageSender {
+    void send(String recipient, String message);
 }
 
-public interface Scanner {
-    void scan(Document d);
-}
-
-public interface Fax {
-    void fax(Document d);
-}
-
-// A device that supports both printing and scanning.
-public class MultiFunctionMachine implements Printer, Scanner {
-    @Override
-    public void print(Document d) {
-        // print logic
-    }
-
-    @Override
-    public void scan(Document d) {
-        // scan logic
+public final class EmailSender implements MessageSender {
+    public void send(String recipient, String message) {
+        // SMTP integration
     }
 }
 
-// A simple printer device.
-public class SimplePrinter implements Printer {
-    @Override
-    public void print(Document d) {
-        // print logic
+public final class NotificationService {
+    private final MessageSender sender;
+
+    public NotificationService(MessageSender sender) {
+        this.sender = sender;
+    }
+
+    public void notifyUser(String user, String msg) {
+        sender.send(user, msg);
     }
 }
 ```
 
-*Now a simple printer only implements the `Printer` interface and isn’t forced to provide methods for scanning or faxing.*
+## Example
 
----
+A practical way to apply SOLID during refactoring:
 
-## 5. Dependency Inversion Principle (DIP)
+1. Extract side effects from core domain classes (**SRP**).
+2. Replace conditional logic with strategy interfaces (**OCP**).
+3. Remove “is-a” relationships that violate behavior guarantees (**LSP**).
+4. Break broad service interfaces into role-specific contracts (**ISP**).
+5. Inject dependencies through constructors and interfaces (**DIP**).
 
-**Definition:**  
-High-level modules should not depend on low-level modules; both should depend on abstractions. Abstractions should not depend on details; details should depend on abstractions.
+## Common Pitfalls
 
-**Explanation:**  
-- **Abstraction over Implementation:** By programming to an interface (or abstract class), you can easily swap out implementations without modifying the high-level logic.
-- **Flexibility and Testability:** It enables dependency injection, which makes unit testing easier as dependencies can be mocked or stubbed.
+- Treating SOLID as dogma and over-abstracting simple flows.
+- Creating interfaces for classes that have no variation pressure.
+- Using inheritance for code reuse when behavior semantics differ.
+- Splitting interfaces so much that cohesion is lost.
 
-**Java Example – Notification Service Using Dependency Injection:**  
+## Best Practices
 
-Imagine a notification service that sends messages. Instead of hardcoding a particular notification method (e.g., email), you depend on an abstraction.
+- Start with concrete implementations; extract abstractions when a second use case appears.
+- Review pull requests for “reason to change” violations.
+- Keep constructor injection as the default dependency model.
+- Add tests around contracts (not only around concrete classes).
 
-```java
-// Abstraction for notification services.
-public interface MessageService {
-    void sendMessage(String msg, String receiver);
-}
+## Advanced Notes
 
-// Concrete implementation using Email.
-public class EmailService implements MessageService {
-    @Override
-    public void sendMessage(String msg, String receiver) {
-        // Code to send email.
-        System.out.println("Email sent to " + receiver + " with message: " + msg);
-    }
-}
+- SOLID works best with complementary practices: immutable value objects, clear module boundaries, and explicit domain language.
+- In Spring Boot systems, SOLID maps naturally to layered architecture, but layers are not a substitute for proper object design.
+- For pattern-level design built on SOLID principles, see the companion article on Java design patterns.
 
-// Another implementation can be provided later, e.g., SMS.
-public class SMSService implements MessageService {
-    @Override
-    public void sendMessage(String msg, String receiver) {
-        // Code to send SMS.
-        System.out.println("SMS sent to " + receiver + " with message: " + msg);
-    }
-}
+## Key Takeaways
 
-// High-level module that depends on the abstraction.
-public class NotificationService {
-    private MessageService service;
-    
-    // Dependency injection through the constructor.
-    public NotificationService(MessageService service) {
-        this.service = service;
-    }
-    
-    public void notifyUser(String message, String user) {
-        service.sendMessage(message, user);
-    }
-}
-
-// Usage Example:
-public class Main {
-    public static void main(String[] args) {
-        // Easily switch between EmailService or SMSService without changing NotificationService.
-        MessageService emailService = new EmailService();
-        NotificationService notification = new NotificationService(emailService);
-        notification.notifyUser("Your order has been shipped.", "user@example.com");
-    }
-}
-```
-
-*Here, `NotificationService` depends solely on the `MessageService` abstraction rather than a concrete class. This allows you to change the underlying message delivery system without altering the high-level logic.*
-
----
-
-## Summary
-
-- **SRP (Single Responsibility Principle):** Each class has one responsibility, which makes the code easier to maintain.
-- **OCP (Open/Closed Principle):** Use abstraction (interfaces or abstract classes) to allow new functionality without modifying existing code.
-- **LSP (Liskov Substitution Principle):** Ensure that subclasses extend base classes without altering the expected behavior.
-- **ISP (Interface Segregation Principle):** Break down fat interfaces into smaller, client-specific ones.
-- **DIP (Dependency Inversion Principle):** High-level modules should depend on abstractions, not concrete implementations, allowing for more flexible and testable code.
-
-By adhering to these SOLID principles, you can build a well-structured Java application that is modular, robust, and easier to manage as it grows in complexity.
+- SOLID is a practical maintainability tool, not a theoretical checklist.
+- The principles are most valuable when used together.
+- Better boundaries lead to safer change, easier testing, and cleaner collaboration.
