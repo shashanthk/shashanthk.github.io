@@ -11,10 +11,6 @@ export default defineConfig({
     starlight({
       title: 'Shashanth | Technical Knowledge Base',
       description: 'Personal technical documentation on Java, Spring Boot, Databases, System Design, Distributed Systems, DevOps, Architecture, and Security.',
-      logo: {
-        alt: 'Knowledge Base Logo',
-        replacesTitle: false,
-      },
       editLink: {
         baseUrl: 'https://github.com/shashanthk/shashanthk.github.io/edit/main/',
       },
