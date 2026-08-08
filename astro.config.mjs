@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import astroMermaid from 'astro-mermaid';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
@@ -61,5 +62,6 @@ export default defineConfig({
         },
       ],
     }),
+    sitemap(),
   ],
 });
