@@ -18,6 +18,9 @@ This portal is built directly from raw Markdown files (`src/content/docs/**/*.md
   - Garbage Collectors (G1, ZGC, Shenandoah) & Memory Allocation
   - Memory Visibility & Happens-Before Guarantees (JMM)
   - Concurrency, Thread Pools, and Virtual Threads (Project Loom)
+  - [Polymorphism](/java/02-polymorphism-in-java/): Static vs. Dynamic Dispatch, Generics & Sealed Types
+  - [SOLID Principles](/java/03-solid-principles-in-java/): SRP, OCP, LSP, ISP, and DIP with Java Examples
+  - [Design Patterns](/java/04-design-patterns-in-java/): Creational, Structural, and Behavioral Patterns
 
 - **[Spring Boot](/spring-boot/01-spring-bean-lifecycle/)**
   - ApplicationContext & IoC Container Lifecycle
@@ -40,6 +43,8 @@ This portal is built directly from raw Markdown files (`src/content/docs/**/*.md
   - Consistent Hashing & Ring Token Allocation
   - Caching Strategies (Cache-Aside, Write-Through, Write-Back)
   - Rate Limiting Algorithms (Token Bucket, Leaky Bucket, Sliding Window)
+  - [REST API Design Guidelines](/system-design/02-rest-api-design-guidelines/): Resource Modeling, HTTP Semantics & Security
+  - [Rate Limiting Strategies](/system-design/03-rate-limiting-strategies/): Fixed/Sliding Window, Token & Leaky Bucket
 
 - **[Distributed Systems](/distributed-systems/01-cap-theorem-and-pacelc/)**
   - CAP Theorem & PACELC Trade-Off Matrix
@@ -52,6 +57,7 @@ This portal is built directly from raw Markdown files (`src/content/docs/**/*.md
   - Non-Root Container Runtime Privileges
   - Kubernetes Pod Lifecycle & Deployment Strategies
   - Infrastructure as Code (Terraform) & CI/CD Pipelines
+  - [SSH Keys for GitHub & Bitbucket](/devops-cloud/02-creating-ssh-keys-for-github-and-bitbucket/): Key Generation & Host Config
 
 ### Software Architecture & Security
 
